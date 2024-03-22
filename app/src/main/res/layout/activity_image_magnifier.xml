@@ -4,6 +4,293 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageMagnifierActivity">
+    tools:context=".activities.ImageMagnifierActivity"
+    android:background="@color/appBg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:elevation="@dimen/_8sdp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/image_magnifier"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/btn_bg"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_3sdp"
+            android:text="@string/save"
+            android:visibility="gone"
+            android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/poppins"
+            app:layout_constraintBottom_toBottomOf="@id/titleText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/titleText" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlImageContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/image_magnifier_background_drawable"
+        app:layout_constraintBottom_toTopOf="@id/clSeekbars"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <com.example.magnifier_new.helper.LoupeView
+            android:id="@+id/image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="@id/rlImageContainer"
+        app:layout_constraintStart_toStartOf="@id/rlImageContainer"
+        app:layout_constraintTop_toTopOf="@id/rlImageContainer"
+        app:layout_constraintBottom_toBottomOf="@id/rlImageContainer"
+        android:id="@+id/llPlaceHolder"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_add"
+            android:scaleType="fitCenter" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeekbars"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/topSeekBarBackground"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@id/loupe_radius_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            app:srcCompat="@drawable/seek_bar_color2" />
+
+        <TextView
+            android:id="@+id/seekBarLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:text="@string/_0x"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/topSeekBarBackground"
+            app:layout_constraintEnd_toStartOf="@id/topSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/topSeekBarBackground" />
+
+        <TextView
+            android:id="@+id/magnificientFactorValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:text="@string/_0x"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/topSeekBarBackground"
+            app:layout_constraintStart_toEndOf="@id/topSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/topSeekBarBackground" />
+
+        <ImageView
+            android:id="@+id/zoomIn"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:contentDescription="@string/zoom"
+            app:layout_constraintBottom_toBottomOf="@id/topSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/topSeekBarBackground"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="@id/topSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/topSeekBarBackground"
+            app:srcCompat="@drawable/ic_zoomin"
+            app:tint="@color/greenColor" />
+
+        <ImageView
+            android:id="@+id/zoomOut"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:contentDescription="@string/zoom"
+            app:layout_constraintBottom_toBottomOf="@id/topSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/topSeekBarBackground"
+            app:layout_constraintHorizontal_bias=".03"
+            app:layout_constraintStart_toStartOf="@id/topSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/topSeekBarBackground"
+            app:srcCompat="@drawable/ic_zoomout"
+            app:tint="@color/greenColor" />
+
+        <TextView
+            android:id="@+id/magnificient_factor_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/magnificent_factor"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toTopOf="@id/topSeekBarBackground"
+            app:layout_constraintStart_toStartOf="@id/topSeekBarBackground" />
+
+        <TextView
+            android:id="@+id/loupe_radius_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/loupe_radius"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toTopOf="@id/bottomSeekBarBackground"
+            app:layout_constraintStart_toStartOf="@id/bottomSeekBarBackground" />
+
+        <ImageView
+            android:id="@+id/bottomSeekBarBackground"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/seek_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            app:srcCompat="@drawable/seek_bar_color2" />
+
+        <ImageView
+            android:id="@+id/sun"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:contentDescription="@string/sun"
+            app:layout_constraintBottom_toBottomOf="@id/bottomSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/bottomSeekBarBackground"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottomSeekBarBackground"
+            app:srcCompat="@drawable/ic_zoomin"
+            app:tint="@color/greenColor" />
+
+        <ImageView
+            android:id="@+id/moon"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="@id/bottomSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/bottomSeekBarBackground"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="@id/bottomSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/bottomSeekBarBackground"
+            app:srcCompat="@drawable/ic_zoomout"
+            app:tint="@color/greenColor" />
+
+        <TextView
+            android:id="@+id/zoomLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:text="@string/_0"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/bottomSeekBarBackground"
+            app:layout_constraintEnd_toStartOf="@id/bottomSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/bottomSeekBarBackground" />
+
+        <TextView
+            android:id="@+id/loupeRadiusValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:text="@string/_50"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/bottomSeekBarBackground"
+            app:layout_constraintStart_toEndOf="@id/bottomSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/bottomSeekBarBackground" />
+
+        <SeekBar
+            android:id="@+id/sbFactorBar"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:max="200"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:progress="0"
+            android:progressBackgroundTint="@color/greenColor"
+            android:progressTint="@color/greenColor"
+            android:saveEnabled="false"
+            android:thumb="@drawable/ic_thumb"
+            android:thumbTint="@color/greenColor"
+            app:layout_constraintBottom_toBottomOf="@id/topSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/topSeekBarBackground"
+            app:layout_constraintStart_toStartOf="@id/topSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/topSeekBarBackground"
+            app:layout_constraintWidth_percent=".68" />
+
+        <SeekBar
+            android:id="@+id/sbRadiusBar"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:progress="50"
+            android:progressBackgroundTint="@color/greenColor"
+            android:progressTint="@color/greenColor"
+            android:saveEnabled="false"
+            android:thumb="@drawable/ic_thumb"
+            android:thumbTint="@color/greenColor"
+            app:layout_constraintBottom_toBottomOf="@id/bottomSeekBarBackground"
+            app:layout_constraintEnd_toEndOf="@id/bottomSeekBarBackground"
+            app:layout_constraintStart_toStartOf="@id/bottomSeekBarBackground"
+            app:layout_constraintTop_toTopOf="@id/bottomSeekBarBackground"
+            app:layout_constraintWidth_percent=".68" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

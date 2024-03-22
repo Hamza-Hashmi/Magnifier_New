@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.magnifier_new"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.magnifier_new"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,9 +41,9 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.5.0")
+    implementation("com.google.android.material:material:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
     testImplementation("junit:junit:4.13.2")
@@ -64,9 +64,6 @@ dependencies {
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
-    //permission handling
-    implementation ("com.guolindev.permissionx:permissions:1.6.4")
-
 
 
     implementation ("com.intuit.ssp:ssp-android:1.1.0")
@@ -84,6 +81,11 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    implementation ("com.google.android.gms:play-services-ads:22.6.0")
+//    implementation ("com.google.android.gms:play-services-ads:22.6.0")
+
+    //permission handling
+    implementation("com.guolindev.permissionx:permissionx:1.7.1")
+
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.6.0"))
 
 }

@@ -23,6 +23,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.magnifier_new.R
 import com.example.magnifier_new.*
+import com.permissionx.guolindev.PermissionX
 
 
 import java.io.File
@@ -100,7 +101,7 @@ fun Context.getFileUri(f:File):Uri?{
     return try{
         FileProvider.getUriForFile(
             this,
-            "${BuildConfig.APPLICATION_ID}.provider",
+            "${this.packageName}.provider",
             f
         )
     }catch (e:Exception){
@@ -170,5 +171,69 @@ fun View.delayViewClickable() {
             }, 1000
         )
     }
+}
+
+fun FragmentActivity.checkAndRequestCameraPermissions(onPermissionStatus: ((Boolean) -> Unit)? = null) {
+    val permissions = mutableListOf(
+        android.Manifest.permission.CAMERA
+    )
+
+    PermissionX.init(this)
+        .permissions(permissions)
+        .onExplainRequestReason { scope, deniedList ->
+            scope.showRequestReasonDialog(
+                deniedList,
+                "Please Allow necessary permissions for the app!",
+                "OK",
+                "Cancel"
+            )
+        }
+        .request { allGranted, _, _ ->
+            if (allGranted) {
+                onPermissionStatus?.invoke(true)
+            } else {
+                showToast("Please allow required permissions")
+                onPermissionStatus?.invoke(false)
+            }
+        }
+}
+
+
+fun FragmentActivity.checkAndRequestPermissions(onPermissionStatus: ((Boolean) -> Unit)? = null) {
+    val permissions = mutableListOf(
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.CAMERA
+    )
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+        permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+    else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        permissions.add(android.Manifest.permission.READ_MEDIA_IMAGES)
+    }
+    PermissionX.init(this)
+        .permissions(permissions)
+        .onExplainRequestReason { scope, deniedList ->
+            scope.showRequestReasonDialog(
+                deniedList,
+                "Please Allow necessary permissions for the app!",
+                "OK",
+                "Cancel"
+            )
+        }
+//        .onForwardToSettings { scope, deniedList ->
+//            scope.showForwardToSettingsDialog(
+//                deniedList,
+//                "You need to allow necessary permissions in Settings manually",
+//                "OK",
+//                "Cancel"
+//            )
+//        }
+        .request { allGranted, _, _ ->
+            if (allGranted) {
+                onPermissionStatus?.invoke(true)
+            } else {
+                onPermissionStatus?.invoke(false)
+            }
+        }
 }
 
